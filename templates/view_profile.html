@@ -1,0 +1,36 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AppFix</title>
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{% block content %}
+
+    <p>Profil użytkownika: {{ user.login }}</p>
+    <p>Last Login: {{ user.last_login}}</p>
+    <p>Data Dołączenia: {{ user.date_registration }}</p>
+    <p>Discord profile: {{ user.discord_profile }}</p>
+    <p>Github profile: {{ user.github_profile }}</p>
+    <p>LinkedIn profile: {{ user.linkedin_profile }}</p>
+    <p>Twitter profile: {{ user.twitter_profile}}</p>
+    <p>Phone number: {{ user.phone_number}}</p>
+     <p>E-mail: {{ user.email}}</p>
+     <p>Upvotes: {{ user.upvotes}}</p>
+        <p>Status:
+        {% if user.is_active == True%}
+            User is online
+        {% else %}
+            User is offline
+        {% endif %}
+         </p>
+
+{% endblock content %}
+
+</body>
+</html>

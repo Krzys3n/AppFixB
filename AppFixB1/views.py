@@ -1,4 +1,4 @@
-from AppFixB1.models import App
+from AppFixB1.models import App, User
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
@@ -97,3 +97,13 @@ def edit_report(request, report_id):
 
     context = {'report': report, 'app': app, 'form': form}
     return render(request, 'edit_report.html', context)
+
+def view_profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    context = {'user' : user}
+    return render(request,'view_profile.html', context)
+
+def edit_profile(request, user_id):
+    return render(request,'edit_profile.html')
+
+

@@ -15,6 +15,7 @@
 <ul>
     {% for app in apps %}
         <li>
+            <a href="{% url 'view_profile' app.owner.id %}">{{ app.owner.login }}</a>
             <a href="{% url 'app' app.id %}">{{ app.name }}</a>
         </li>
     {% empty %}
