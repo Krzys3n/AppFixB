@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AppFix</title>
+</head>
+<body>
+
+{% extends "base.html" %}
+{% block content %}
+        <p>Zgłoszenie:</p>
+        <form action="{% url 'new_report' app_id=app_id %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button name="submit">Dodaj zgłoszenie</button>
+        </form>
+
+{% endblock content %}
+
+</body>
+</html>

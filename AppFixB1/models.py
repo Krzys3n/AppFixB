@@ -28,7 +28,7 @@ class User(AbstractBaseUser):
     linkedin_profile = models.CharField(max_length=255, blank=True, null=True)
     twitter_profile = models.CharField(max_length=255, blank=True, null=True)
     discord_profile = models.CharField(max_length=255, blank=True, null=True)
-    # company_id = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
+
 
     USERNAME_FIELD = 'login'
     REQUIRED_FIELDS = ['email', 'password']
@@ -91,8 +91,8 @@ class App (models.Model):
     date_added = models.DateField(auto_now_add=True)
     access = models.CharField(max_length=255, choices=[(choice.value, choice.value) for choice in AccessChoices],
                               default=AccessChoices.PUBLIC.value)
-    rating = models.DecimalField(max_digits=5, decimal_places=2)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.DecimalField(max_digits=5, decimal_places=2,blank=True, null = True)
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -116,8 +116,8 @@ class Report(models.Model):
 
     priority = models.IntegerField(default=1, choices=[(i, i) for i in range(1, 11)])
 
-    date_created = models.DateField(auto_now_add=True)
-    date_solved = models.DateField(blank=True, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_solved = models.DateTimeField(blank=True, null=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     app = models.ForeignKey(App, on_delete=models.CASCADE)

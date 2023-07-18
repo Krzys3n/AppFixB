@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AppFix</title>
+
+    <style>
+        .wrapped-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+
+</head>
+<body>
+
+{% extends 'base.html' %}s
+{% block content %}
+
+    <p>Aplikacja: {{ app.name }}</p>
+
+    <p class="wrapped-text">Opis Aplikacji: {{ app.description }}</p>
+     <p class="wrapped-text">Category: {{ app.category }}</p>
+     <p class="wrapped-text">Data Dodania: {{ app.date_added }}</p>
+    <p class="wrapped-text">Dodana przez użytkownika: {{ app.owner.login }}</p>
+     <p class="wrapped-text">Ocena: {{ app.rating }}</p>
+    <a href="{% url 'new_report' app.id %}">Zgłoś błąd</a>
+<p>Zgłoszenia:</p>
+    <ul>
+        {% for report in reports %}
+        <li >
+            <a href="{% url 'edit_report' report.id %}">Edytuj wpis</a>
+            <p>{{ report.date_created|date:'d M Y H:i' }}</p>
+            <p class="wrapped-text">{{ report.content|linebreaksbr }}</p>
+        </li>
+        {% empty %}
+        <li>Nie ma jeszcze żadnego wpisu.</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
+
+
+</body>
+</html>
