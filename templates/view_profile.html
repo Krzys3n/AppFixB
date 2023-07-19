@@ -11,7 +11,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+    {% if request.user.id == user.id %}
+        <a href="{% url 'edit_profile' %}">Edycja profilu</a>
+    {% endif %}
     <p>Profil użytkownika: {{ user.login }}</p>
     <p>Last Login: {{ user.last_login}}</p>
     <p>Data Dołączenia: {{ user.date_registration }}</p>

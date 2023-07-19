@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% extends "base.html" %}
+{% block content %}
+    Edycja profilu
+    <form method="post">
+        {% csrf_token %}
+        <p>Profil użytkownika: {{ user.login }}</p>
+        <p>Last Login: {{ user.last_login}}</p>
+        <p>Data Dołączenia: {{ user.date_registration }}</p>
+        <p><label for="discord_profile">Profil Discord:</label>
+        <input type="text" name="discord_profile" value="{{ initial_data.discord_profile }}"></p>
+       <p> <label for="github_profile">Profil GitHub:</label>
+        <input type="text" name="github_profile" value="{{ initial_data.github_profile }}"></p>
+        <p><label for="linkedin_profile">Profil LinkedIn:</label>
+        <input type="text" name="linkedin_profile" value="{{ initial_data.linkedin_profile }}"></p>
+        <p><label for="twitter_profile">Profil Twitter:</label>
+        <input type="text" name="twitter_profile" value="{{ initial_data.twitter_profile }}"></p>
+       <p> <label for="phone_number">Numer telefonu:</label>
+        <input type="text" name="phone_number" value="{{ initial_data.phone_number }}"></p>
+        <p><label for="email">Adres e-mail:</label>
+        <input type="email" name="email" value="{{ initial_data.email }}" required></p>
+         <p>Upvotes: {{ user.upvotes}}</p>
+        <p>Status:
+        {% if user.is_active == True%}
+            User is online
+        {% else %}
+            User is offline
+        {% endif %}
+         </p>
+        <button type="submit">Zapisz zmiany</button>
+    </form>
+
+{% endblock content %}
+</body>
+</html>

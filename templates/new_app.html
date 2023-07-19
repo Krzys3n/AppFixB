@@ -8,12 +8,33 @@
 
 {% extends "base.html" %}
 {% block content %}
-        <p>Nazwa:</p>
+
         <form action="{% url 'new_app' %}" method='post'>
             {% csrf_token %}
             {{ form.as_p }}
             <button name="submit">Dodaj temat</button>
         </form>
+
+<script type="text/javascript">
+    function toggleCustomCategory() {
+        var categoryField = document.getElementById("id_category");
+        var customCategoryField = document.getElementById("id_custom_category");
+        var customCategoryLabel = document.getElementById("custom-category-label");
+
+        if (categoryField.value === "other") {
+            customCategoryField.style.display = "inline-block";
+            customCategoryLabel.style.display = "inline-block";
+            customCategoryField.setAttribute("required", "true");
+            customCategoryLabel.setAttribute("required", "true");
+        } else {
+            customCategoryField.style.display = "none";
+            customCategoryLabel.style.display = "none";
+            customCategoryField.removeAttribute("required");
+            customCategoryLabel.removeAttribute("required");
+        }
+    }
+</script>
+
 
 {% endblock content %}
 

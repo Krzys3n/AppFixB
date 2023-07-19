@@ -10,20 +10,46 @@
 
 {% block content %}
 
-<p>Aplikacje:</p>
+<p>Public Apps:</p>
 
 <ul>
     {% for app in apps %}
+        {% if app.access == 'public' %}
         <li>
-            <a href="{% url 'view_profile' app.owner.id %}">{{ app.owner.login }}</a>
-            <a href="{% url 'app' app.id %}">{{ app.name }}</a>
+            Date added: <a>{{ app.date_added }} <br></a>
+            App Owner: <a href="{% url 'view_profile' app.owner.id %}">{{ app.owner.login }}  <br></a>
+            App Name: <a href="{% url 'app' app.id %}">{{ app.name }}</a>
         </li>
+        {% endif %}
     {% empty %}
         <li>Nie została jeszcze dodana żadna aplikacja.</li>
+
     {% endfor %}
 </ul>
 
+    <p>Your Private Apps:</p>
+
+<ul>
+    {% for app in apps %}
+        {% if app.access == 'private' and app.owner == user %}
+        <li>
+            Date added: <a>{{ app.date_added }} <br></a>
+            App Owner: <a href="{% url 'view_profile' app.owner.id %}">{{ app.owner.login }}  <br></a>
+            App Name: <a href="{% url 'app' app.id %}">{{ app.name }}</a>
+        </li>
+        {% endif %}
+    {% empty %}
+        <li>Nie została jeszcze dodana żadna aplikacja.</li>
+
+    {% endfor %}
+</ul>
+
+
+
    <a href="{% url 'new_app' %}">Dodaj nową aplikację</a>
+
+
+
 
 {% endblock content %}
 
