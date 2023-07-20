@@ -15,6 +15,13 @@
         <a href="{% url 'edit_profile' %}">Edycja profilu</a>
     {% endif %}
     <p>Profil użytkownika: {{ user.login }}</p>
+     {% if user_company != 'No Company' %}
+          <p>Company: {{ user_company.company.name}}</p>
+     {%  else %}
+      <p>Company: {{ user_company}}</p>
+    {% endif %}
+
+
     <p>Last Login: {{ user.last_login}}</p>
     <p>Data Dołączenia: {{ user.date_registration }}</p>
     <p>Discord profile: {{ user.discord_profile }}</p>
@@ -23,6 +30,7 @@
     <p>Twitter profile: {{ user.twitter_profile}}</p>
     <p>Phone number: {{ user.phone_number}}</p>
      <p>E-mail: {{ user.email}}</p>
+    <p>Count of Reports: {{ report_count}}</p>
      <p>Upvotes: {{ user.upvotes}}</p>
         <p>Status:
         {% if user.is_active == True%}

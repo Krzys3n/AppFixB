@@ -66,11 +66,11 @@ class RoleCompany(Enum):
 
 class UserCompany(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    id_company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     role_company = models.CharField(max_length=255, choices=[(role.value, role.name) for role in RoleCompany])
 
     def __str__(self):
-        return f"{self.user.username}'s Company"
+        return f"{self.user.login}'s Company"
 
     class Meta:
         verbose_name_plural = 'UserCompanies'
@@ -100,6 +100,12 @@ class App (models.Model):
     class Meta:
         verbose_name_plural = 'Apps'
 
+class StatusChoices(Enum):
+    Open = 'public'
+    InProgres = 'private'
+
+
+
 class Report(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -112,14 +118,14 @@ class Report(models.Model):
         ('Resolved', 'Resolved'),
         ('Closed', 'Closed'),
     )
-    status = models.CharField(max_length=255, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='Open')
 
     priority = models.IntegerField(default=1, choices=[(i, i) for i in range(1, 11)])
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_solved = models.DateTimeField(blank=True, null=True)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reports')
     app = models.ForeignKey(App, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -139,3 +145,14 @@ class AppCompany(models.Model):
 
     class Meta:
         verbose_name_plural = 'AppCompanies'
+
+class Invitation(models.Model):
+    # Sender of the invitation (the company owner)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invitations')
+    # Recipient of the invitation (the user being invited)
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_invitations')
+    # The company the user is invited to join
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    # Additional fields as needed, e.g., invitation status, expiration date, etc.
+    is_accepted = models.BooleanField(default=False)
+    date_sent = models.DateTimeField(auto_now_add=True)

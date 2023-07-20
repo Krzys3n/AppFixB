@@ -8,11 +8,11 @@
 
 {% extends "base.html" %}
 {% block content %}
-        <p>Zgłoszenie:</p>
+        <p>Report:</p>
         <form action="{% url 'new_report' app_id=app_id %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button name="submit">Dodaj zgłoszenie</button>
+            <button name="submit">Send Report</button>
         </form>
 
 {% endblock content %}

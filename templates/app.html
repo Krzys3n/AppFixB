@@ -29,9 +29,13 @@
     <ul>
         {% for report in reports %}
         <li >
+            <p>Subject:{{ report.name}}</p>
             <a href="{% url 'edit_report' report.id %}">Edytuj wpis</a>
             <p>{{ report.date_created|date:'d M Y H:i' }}</p>
-            <p class="wrapped-text">{{ report.content|linebreaksbr }}</p>
+            <p class="wrapped-text">Content: {{ report.content|linebreaksbr }}</p>
+            <p>Status: {{ report.status }}</p>
+            <p>Priority: {{ report.priority }}</p>
+            <p>Sender: {{ report.user.login }}</p>
         </li>
         {% empty %}
         <li>Nie ma jeszcze żadnego wpisu.</li>

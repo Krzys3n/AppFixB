@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AppFix</title>
+</head>
+<body>
+
+
+{% extends "base.html" %}
+
+{% block content %}
+
+   {% if company %}
+    <h1>Your Company:</h1>
+    <p>Name: {{ company.name }}</p>
+    <p>Description: {{ company.description }}</p>
+       <a href = {% url 'company_members' %} >members</a>
+    <!-- Display other company details here -->
+{% else %}
+    <h1>You are not part of any company.</h1>
+      <a href = {% url 'new_company' %}> Create new company<a/>
+
+       <p>Join to existing company:</p>
+       <p>invites: </p>
+
+    <!-- Provide a link to create a new company or join an existing one -->
+{% endif %}
+
+{% endblock content %}
+
+
+</body>
+</html>

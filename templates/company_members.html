@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AppFix</title>
+</head>
+<body>
+
+
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Invite User:</h1>
+<p><label for="discord_profile">Username:</label>
+    <input type="text" name="discord_profile"></p>
+ <button type="submit">Send Invite</button>
+
+
+<h1>Company Members</h1>
+<ul>
+  {% for companyUser in companyUsers %}
+    <li>{{ companyUser.user.login }} - {{ companyUser.role_company }}</li>
+  {% endfor %}
+</ul>
+
+{% endblock content %}
+
+
+</body>
+</html>

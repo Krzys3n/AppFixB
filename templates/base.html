@@ -8,6 +8,7 @@
 <p>
     <a href="{% url 'index' %}">Home</a> -
     <a href="{% url 'apps' %}">Apps</a> -
+     <a href="{% url 'company' %}">Company</a> -
 
     {% if user.is_authenticated %}
         Hello, <a href="{% url 'view_profile' request.user.id %}">{{ request.user.login }}</a> -
@@ -15,6 +16,7 @@
     {% else %}
         <a href="{% url 'users:register' %}">Register</a> -
         <a href="{% url 'users:login' %}">Log In</a>
+
 
     {% endif %}
 

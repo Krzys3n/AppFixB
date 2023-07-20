@@ -1,6 +1,9 @@
-from django import forms
-from .models import App,Report
+from datetime import datetime
 
+from django import forms
+from django.db import models
+
+from .models import App, Report, Company
 
 from django import forms
 from .models import App
@@ -68,10 +71,17 @@ class AppForm(forms.ModelForm):
 
 
 class ReportForm(forms.ModelForm):
+
+
     class Meta:
+
         model = Report
-        fields = ['content']
-        labels = {}
+        fields = ['name', 'content', 'priority']
+
+class CompanyForm(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = ['name', 'description']
 
 
 
