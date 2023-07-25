@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AppFix</title>
+</head>
+<body>
+
+
+{% extends "base.html" %}
+
+{% block content %}
+
+   {% if company %}
+    <h1>Your Company:</h1>
+    <p>Name: {{ company.name }}</p>
+    <p>Description: {{ company.description }}</p>
+       <p>You are already part of the company. You can be only part of one company.</p>
+       <a>Leave Company</a>
+    <!-- Display other company details here -->
+{% else %}
+       <p>Your invites:</p>
+        {% for invitation in invitations %}
+           <p>Invite from user {{ invitation.sender.login  }} to Company {{ invitation.company  }}, sent: {{ invitation.date_sent }}</p>
+            Status: {{ invitation.is_accepted }}
+           <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="invitation_id" value="{{ invitation.pk }}">
+                <button type="submit" name="accept_invite">Accept Invite</button>
+                <button type="submit" name="decline_invite">Decline Invite</button>
+            </form>
+       {% endfor %}
+{% endif %}
+
+{% endblock content %}
+
+
+</body>
+</html>

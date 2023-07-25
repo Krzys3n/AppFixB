@@ -33,7 +33,7 @@
     <p>Count of Reports: {{ report_count}}</p>
      <p>Upvotes: {{ user.upvotes}}</p>
         <p>Status:
-        {% if user.is_active == True%}
+        {% if  user.is_online == True%}
             User is online
         {% else %}
             User is offline

@@ -1,4 +1,6 @@
-from AppFixB1.models import App, User, UserCompany, Company
+from django.utils import timezone
+
+from AppFixB1.models import App, User, UserCompany, Company, Invitation
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
@@ -9,7 +11,6 @@ from AppFixB1.models import App, Report
 def check_app_owner(request,app):
     if app.owner != request.user:
         raise Http404
-
 
 
 def index(request):
@@ -198,3 +199,35 @@ def company_members(request):
 
     context = {'companyUsers': company_users}
     return render(request, 'company_members.html', context)
+
+
+def company_invitations(request):
+    user = request.user
+    user_company = UserCompany.objects.filter(user=user).first()
+
+    context = {}
+    if user_company:
+        # The user is part of a company or has created a company
+        company = user_company.company
+        context['company'] = company
+    else:
+        invitations = Invitation.objects.all()
+        context['invitations'] = invitations
+    if request.method == "POST":
+        invitation_id = request.POST.get("invitation_id")
+        try:
+            invitation = Invitation.objects.get(pk=invitation_id)
+
+            if "accept_invite" in request.POST:
+                invitation.is_accepted = True
+                user.company_set.add(invitation.company)
+                print(invitation.company)
+                # return redirect('company')
+            elif "decline_invite" in request.POST:
+                invitation.is_accepted = False
+
+
+            invitation.save()
+        except Invitation.DoesNotExist:
+            pass  # Handle the case when the invitation is not found
+    return render(request, 'company_invitations.html',context)

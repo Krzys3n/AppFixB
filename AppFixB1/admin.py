@@ -2,7 +2,7 @@ from django.contrib import admin
 
 
 from django.shortcuts import render
-from .models import App, Report, User, Company, UserCompany
+from .models import App, Report, User, Company, UserCompany, Invitation
 
 
 class ReportAdmin(admin.ModelAdmin):
@@ -35,3 +35,4 @@ class AppAdmin(admin.ModelAdmin):
 
 admin.site.register(App, AppAdmin)
 admin.site.register(Report, ReportAdmin)
+admin.site.register(Invitation)

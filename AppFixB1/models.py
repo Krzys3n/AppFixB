@@ -15,6 +15,7 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_online = models.BooleanField(default=False)
 
     login = models.CharField(max_length=255, unique=True)
     email = models.EmailField(unique=True)
@@ -24,11 +25,11 @@ class User(AbstractBaseUser):
     role = models.CharField(max_length=50, choices=[('Admin', 'Admin'), ('User', 'User')], default='User')
     upvotes = models.IntegerField(default=0)
     date_registration = models.DateTimeField(auto_now_add=True)
+    last_activity = models.DateTimeField(null=True, blank=True)
     github_profile = models.CharField(max_length=255, blank=True, null=True)
     linkedin_profile = models.CharField(max_length=255, blank=True, null=True)
     twitter_profile = models.CharField(max_length=255, blank=True, null=True)
     discord_profile = models.CharField(max_length=255, blank=True, null=True)
-
 
     USERNAME_FIELD = 'login'
     REQUIRED_FIELDS = ['email', 'password']
@@ -44,9 +45,16 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-    @property
-    def is_staff(self):
-        return self.is_admin
+    def update_last_login(self):
+        self.last_login = timezone.now()
+        self.save()
+
+    def update_online_status(self, status):
+        self.is_online = status
+        self.save()
+    # @property
+    # def is_staff(self):
+    #     return self.is_admin
 
 
 class Company(models.Model):
@@ -81,7 +89,7 @@ class AccessChoices(Enum):
     PRIVATE = 'private'
 
 
-class App (models.Model):
+class App(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)
@@ -91,7 +99,7 @@ class App (models.Model):
     date_added = models.DateField(auto_now_add=True)
     access = models.CharField(max_length=255, choices=[(choice.value, choice.value) for choice in AccessChoices],
                               default=AccessChoices.PUBLIC.value)
-    rating = models.DecimalField(max_digits=5, decimal_places=2,blank=True, null = True)
+    rating = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -100,10 +108,10 @@ class App (models.Model):
     class Meta:
         verbose_name_plural = 'Apps'
 
+
 class StatusChoices(Enum):
     Open = 'public'
     InProgres = 'private'
-
 
 
 class Report(models.Model):
@@ -134,6 +142,7 @@ class Report(models.Model):
     class Meta:
         verbose_name_plural = 'Reports'
 
+
 class AppCompany(models.Model):
     id = models.AutoField(primary_key=True)
     id_app = models.ForeignKey(App, on_delete=models.CASCADE)
@@ -146,6 +155,7 @@ class AppCompany(models.Model):
     class Meta:
         verbose_name_plural = 'AppCompanies'
 
+
 class Invitation(models.Model):
     # Sender of the invitation (the company owner)
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invitations')
@@ -156,3 +166,5 @@ class Invitation(models.Model):
     # Additional fields as needed, e.g., invitation status, expiration date, etc.
     is_accepted = models.BooleanField(default=False)
     date_sent = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural = 'Invitations'
