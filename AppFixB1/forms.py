@@ -1,19 +1,4 @@
-from datetime import datetime
-
-from django import forms
-from django.db import models
-
-from .models import App, Report, Company
-
-from django import forms
-from .models import App
-
-from django import forms
-from .models import App
-
-from django import forms
-from .models import App
-
+from .models import Report, Company
 from django import forms
 from .models import App
 

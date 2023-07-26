@@ -73,9 +73,9 @@ class RoleCompany(Enum):
 
 
 class UserCompany(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    role_company = models.CharField(max_length=255, choices=[(role.value, role.name) for role in RoleCompany])
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, default=None)
+    role_company = models.CharField(max_length=255, choices=[(role.value, role.name) for role in RoleCompany], default=None)
 
     def __str__(self):
         return f"{self.user.login}'s Company"
@@ -83,6 +83,11 @@ class UserCompany(models.Model):
     class Meta:
         verbose_name_plural = 'UserCompanies'
 
+    # def __init__(self, user=None, company=None, role_company=None, *args, **kwargs):
+    #     super(UserCompany, self).__init__(*args, **kwargs)
+    #     self.user = user
+    #     self.company = company
+    #     self.role_company = role_company
 
 class AccessChoices(Enum):
     PUBLIC = 'public'

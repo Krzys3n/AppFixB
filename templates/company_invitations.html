@@ -16,7 +16,9 @@
     <p>Name: {{ company.name }}</p>
     <p>Description: {{ company.description }}</p>
        <p>You are already part of the company. You can be only part of one company.</p>
-       <a>Leave Company</a>
+        <p>  <a href="{% url 'leave_company' %}">
+            <button>Leave Company</button>
+       </a></p>
     <!-- Display other company details here -->
 {% else %}
        <p>Your invites:</p>

@@ -14,6 +14,8 @@ path('view_profile/<int:user_id>', views.view_profile, name = 'view_profile'),
 path('company/', views.company, name = 'company'),
 path('new_company/', views.new_company, name = 'new_company'),
 path('company_memebrs', views.company_members, name = 'company_members'),
-path('company_invitations', views.company_invitations, name = 'company_invitations')
+path('company_invitations', views.company_invitations, name = 'company_invitations'),
+path('leave_company/', views.leave_company, name='leave_company'),
+path('company_invite_user/', views.company_invite_user, name='company_invite_user'),
 
 ]

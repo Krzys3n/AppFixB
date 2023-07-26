@@ -9,9 +9,9 @@ class ReportAdmin(admin.ModelAdmin):
     list_display = ('get_app_name','date_created' )
 
     def get_app_name(self, obj):
-        return obj.reportId.appName if obj.reportId else ''
+        return obj.name if obj.id else ''
 
-    get_app_name.short_description = 'App Name'
+    get_app_name.short_description = 'Report Name'
 #
 #
 # admin.site.register(App, AppAdmin)

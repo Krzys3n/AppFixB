@@ -5,11 +5,8 @@
     <title>AppFix</title>
 </head>
 <body>
-
-
-{% extends "base.html" %}
-
 {% block content %}
+
 <h1>Invite User:</h1>
 <form method="post">
     {% csrf_token %}
@@ -18,16 +15,7 @@
     <button type="submit">Send Invite</button>
 </form>
 
-
-<h1>Company Members</h1>
-<ul>
-  {% for companyUser in companyUsers %}
-    <li>{{ companyUser.user.login }} - {{ companyUser.role_company }}</li>
-  {% endfor %}
-</ul>
-
 {% endblock content %}
-
 
 </body>
 </html>

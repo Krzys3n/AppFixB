@@ -1,6 +1,6 @@
 from django.utils import timezone
 
-from AppFixB1.models import App, User, UserCompany, Company, Invitation
+from AppFixB1.models import App, User, UserCompany, Company, Invitation, RoleCompany
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
@@ -8,7 +8,7 @@ from AppFixB1.forms import AppForm, ReportForm, CompanyForm
 from AppFixB1.models import App, Report
 
 
-def check_app_owner(request,app):
+def check_app_owner(request, app):
     if app.owner != request.user:
         raise Http404
 
@@ -24,20 +24,19 @@ def apps(request):
     apps = App.objects.order_by('date_added')
     user = request.user
 
-
     # apps = App.objects.order_by('date_added')
     context = {'apps': apps, 'user': user}
     return render(request, 'apps.html', context)
+
 
 @login_required
 def app(request, app_id):
     app = App.objects.get(id=app_id)
 
-
-
     reports = app.report_set.order_by('-date_created')
     context = {'app': app, 'reports': reports}
     return render(request, 'app.html', context)
+
 
 @login_required
 def new_app(request):
@@ -56,6 +55,8 @@ def new_app(request):
         # Wyświetlenie pustego formularza.
     context = {'form': form}
     return render(request, 'new_app.html', context)
+
+
 @login_required
 def new_report(request, app_id):
     app = get_object_or_404(App, id=app_id)
@@ -67,20 +68,19 @@ def new_report(request, app_id):
             report.user = request.user
             report.app = app
             report.save()
-            return redirect('app', app_id = app_id)
+            return redirect('app', app_id=app_id)
     else:
         form = ReportForm()
 
     context = {'form': form, 'app_id': app_id}
     return render(request, 'new_report.html', context)
 
+
 @login_required
 def edit_report(request, report_id):
-    #"""Edycja istniejącego wpisu."""
+    # """Edycja istniejącego wpisu."""
     report = Report.objects.get(id=report_id)
     app = report.app
-
-
 
     if request.method != 'POST':
         # Żądanie początkowe, wypełnienie formularza aktualną treścią wpisu.
@@ -95,9 +95,9 @@ def edit_report(request, report_id):
     context = {'report': report, 'app': app, 'form': form}
     return render(request, 'edit_report.html', context)
 
+
 def view_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
-
 
     user_company = UserCompany.objects.filter(user=user).first()
 
@@ -107,6 +107,7 @@ def view_profile(request, user_id):
     report_count = Report.objects.filter(user=user).count()
     context = {'user': user, 'user_company': user_company, 'report_count': report_count}
     return render(request, 'view_profile.html', context)
+
 
 @login_required
 def edit_profile(request):
@@ -120,7 +121,6 @@ def edit_profile(request):
         twitter_profile = request.POST.get('twitter_profile')
         phone_number = request.POST.get('phone_number')
         email = request.POST.get('email')
-
 
         user.discord_profile = discord_profile
         user.github_profile = github_profile
@@ -143,13 +143,12 @@ def edit_profile(request):
         }
         return render(request, 'edit_profile.html', {'initial_data': initial_data})
 
+
 @login_required
 def company(request):
     user = request.user
+    print(user)
     user_company = UserCompany.objects.filter(user=user).first()
-
-
-
 
     context = {}
     if user_company:
@@ -157,10 +156,6 @@ def company(request):
         company = user_company.company
         context['company'] = company
     return render(request, 'company.html', context)
-
-
-class CompanyUser:
-    pass
 
 
 @login_required
@@ -220,14 +215,60 @@ def company_invitations(request):
 
             if "accept_invite" in request.POST:
                 invitation.is_accepted = True
-                user.company_set.add(invitation.company)
-                print(invitation.company)
-                # return redirect('company')
+                user_company, created = UserCompany.objects.get_or_create(user=user,
+                                                                          defaults={'company': invitation.company,
+                                                                                    'role_company': RoleCompany.TESTER.value})
+
+                if created:
+                    print(user_company.user.login)  # Example to access the login field of the related User object
+                    print(user_company.company.name)  # Example to access the name field of the related Company object
+                return redirect('company')
             elif "decline_invite" in request.POST:
                 invitation.is_accepted = False
-
 
             invitation.save()
         except Invitation.DoesNotExist:
             pass  # Handle the case when the invitation is not found
-    return render(request, 'company_invitations.html',context)
+    return render(request, 'company_invitations.html', context)
+
+
+def leave_company(request):
+    # Assuming you have a user_company relationship for the logged-in user
+    user_company = request.user.usercompany
+
+    if user_company:
+        # If the user is part of a company, remove them from the company
+        user_company.delete()
+
+    return redirect(
+        'company')  # Replace 'company_home' with the URL name of the page where you want to redirect after leaving the company
+
+
+
+def company_invite_user(request):
+    if request.method == 'POST':
+        # Get the username entered in the form
+        us = request.user
+        username = request.POST.get('AppFix_profile')
+        print(username)
+        try:
+            # Check if the user exists in the database
+            user = User.objects.get(login=username)
+            print(user.login)
+            # Check if the user is already part of a company
+            # if user.usercompany:
+            #     return render(request, 'user_already_in_company.html', {'user': user})
+
+            # Assuming you have a company for the current user (you can customize this logic)
+            company = Company.objects.get(owner=request.user.id)
+
+            # Create an invitation for the user
+            invitation = Invitation.objects.create(sender=request.user, recipient=user, company = company)
+            invitation.save()
+
+            return render(request, 'company.html')
+
+        except User.DoesNotExist:
+            return render(request, 'company_members.html')
+
+    return render(request, 'company_invite_user.html')

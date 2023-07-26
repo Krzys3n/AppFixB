@@ -15,7 +15,12 @@
     <h1>Your Company:</h1>
     <p>Name: {{ company.name }}</p>
     <p>Description: {{ company.description }}</p>
-       <a href = {% url 'company_members' %} >members</a>
+      <p> <a href = {% url 'company_members' %} >members</a></p>
+       <p> <a href = {% url 'company_invite_user' %} >invites</a></p>
+
+      <p>  <a href="{% url 'leave_company' %}">
+            <button>Leave Company</button>
+       </a></p>
     <!-- Display other company details here -->
 {% else %}
     <h1>You are not part of any company.</h1>
