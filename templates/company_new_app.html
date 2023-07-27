@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AppFix</title>
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<p>Your Apps:</p>
+
+<ul>
+    {% for app in apps %}
+        <li>
+            Date added: <a>{{ app.date_added }} <br></a>
+            App Owner: <a href="{% url 'view_profile' app.owner.id %}">{{ app.owner.login }}  <br></a>
+            App Name: <a href="{% url 'app' app.id %}">{{ app.name }} <br></a>
+            <a href = "{% url 'company_add_app' app.id %}">Add App to Company</a>
+        </li>
+    {% empty %}
+        <li>Nie została jeszcze dodana żadna aplikacja.</li>
+
+    {% endfor %}
+</ul>
+
+
+
+
+
+   <a href="{% url 'company_new_app' %}">Dodaj nową aplikację</a>
+
+
+
+
+{% endblock content %}
+
+</body>
+</html>

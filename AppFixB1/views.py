@@ -1,6 +1,6 @@
 from django.utils import timezone
 
-from AppFixB1.models import App, User, UserCompany, Company, Invitation, RoleCompany
+from AppFixB1.models import App, User, UserCompany, Company, Invitation, RoleCompany, AppCompany
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
@@ -272,3 +272,28 @@ def company_invite_user(request):
             return render(request, 'company_members.html')
 
     return render(request, 'company_invite_user.html')
+
+
+def company_apps(request):
+    # """Wyświetlenie wszystkich tematów."""
+    user = request.user
+    apps = AppCompany.objects.filter(company=user.usercompany.company).order_by('app__date_added')
+
+    # apps = App.objects.order_by('date_added')
+    context = {'apps': apps, 'user': user}
+    return render(request, 'company_apps.html', context)
+
+
+def company_new_app(request):
+    # """Wyświetlenie wszystkich tematów."""
+    user = request.user
+    apps = App.objects.filter(owner = user ).order_by('date_added')
+
+    # apps = App.objects.order_by('date_added')
+    context = {'apps': apps, 'user': user}
+    return render(request, 'company_new_app.html', context)
+
+
+def company_add_app(request,app_id):
+
+    return redirect('company_apps')

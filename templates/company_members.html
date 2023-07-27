@@ -10,19 +10,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Invite User:</h1>
-<form method="post">
-    {% csrf_token %}
-    <p><label for="AppFix_profile">Username:</label>
-    <input type="text" name="AppFix_profile"></p>
-    <button type="submit">Send Invite</button>
-</form>
 
 
 <h1>Company Members</h1>
 <ul>
   {% for companyUser in companyUsers %}
-    <li>{{ companyUser.user.login }} - {{ companyUser.role_company }}</li>
+      <li><a href = '{% url 'view_profile' companyUser.user.id %}'>{{ companyUser.user.login }} </a>- {{ companyUser.role_company }}</li>
   {% endfor %}
 </ul>
 

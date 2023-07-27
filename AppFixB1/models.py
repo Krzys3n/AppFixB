@@ -150,8 +150,8 @@ class Report(models.Model):
 
 class AppCompany(models.Model):
     id = models.AutoField(primary_key=True)
-    id_app = models.ForeignKey(App, on_delete=models.CASCADE)
-    id_company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    app = models.ForeignKey(App, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     development_plan = models.TextField(blank=True, null=True)
 
     def __str__(self):
