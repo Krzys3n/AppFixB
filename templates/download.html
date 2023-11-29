@@ -1,0 +1,38 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pobierz Pynylise</title>
+
+    <style>
+        .wrapped-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+
+</head>
+<body>
+
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- your_app/templates/your_app/pdf_template.html -->
+
+
+<body>
+
+    <h2>Tutaj możesz pobrać najnowszą wersję aplikacji:</h2>
+    <p>Pynalise:<a href="{% url 'download_file' %}"> Pobierz</a></p>
+    <p>Dokumentacja:<a href="{% url 'download_file' %}"> Pobierz</a></p>
+</body>
+
+
+
+{% endblock content %}
+
+</body>
+</html>

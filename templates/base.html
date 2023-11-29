@@ -7,15 +7,18 @@
 <body>
 <p>
     <a href="{% url 'index' %}">Home</a> -
-    <a href="{% url 'apps' %}">Apps</a> -
-     <a href="{% url 'company' %}">Company</a> -
+{#    <a href="{% url 'apps' %}">Apps</a> -#}
+{#     <a href="{% url 'company' %}">Company</a> -#}
+    <a href="{% url 'doc' %}">Dokumentacja</a> -
+    <a href="{% url 'download' %}">Pobierz Pynalise</a> -
+    <a href="{% url 'new_report' '8' %}">Zgłoś błąd</a> -
 
     {% if user.is_authenticated %}
         Hello, <a href="{% url 'view_profile' request.user.id %}">{{ request.user.login }}</a> -
         <a href="{% url 'users:logout' %}">Log Out</a>
     {% else %}
-        <a href="{% url 'users:register' %}">Register</a> -
-        <a href="{% url 'users:login' %}">Log In</a>
+        <a href="{% url 'users:register' %}">Rejestracja</a> -
+        <a href="{% url 'users:login' %}">Logowanie</a>
 
 
     {% endif %}

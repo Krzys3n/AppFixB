@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentacja</title>
+
+    <style>
+        .wrapped-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+
+</head>
+<body>
+
+{#{% extends 'base.html' %}#}
+
+{% block content %}
+<!-- your_app/templates/your_app/pdf_template.html -->
+
+
+    <iframe src="{% static 'Projekt.pdf' %}" width="100%" height="750px" style="border: none;"></iframe>
+
+
+
+{% endblock content %}
+
+</body>
+</html>

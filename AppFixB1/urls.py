@@ -20,5 +20,8 @@ path('company_invite_user/', views.company_invite_user, name='company_invite_use
 path('company_apps/', views.company_apps, name = 'company_apps'),
 path('company_new_app/' , views.company_new_app, name = 'company_new_app'),
 path('company_add_app/(<int:app_id>)' , views.company_add_app, name = 'company_add_app'),
-
+path('doc' , views.doc, name = 'doc'),
+path('download' , views.download, name = 'download'),
+path('downloadf/', views.download_file, name='download_file'),
+path('reportPynalise', views.reportPy, name='reportPy'),
 ]

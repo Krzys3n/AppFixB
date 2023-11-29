@@ -1,8 +1,10 @@
+import os
+
 from django.utils import timezone
 
 from AppFixB1.models import App, User, UserCompany, Company, Invitation, RoleCompany, AppCompany
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, FileResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from AppFixB1.forms import AppForm, ReportForm, CompanyForm
 from AppFixB1.models import App, Report
@@ -297,3 +299,22 @@ def company_new_app(request):
 def company_add_app(request,app_id):
 
     return redirect('company_apps')
+
+def doc(request):
+    return render(request, 'doc.html')
+def download(request):
+    return render(request, 'download.html')
+
+
+def download_file(request):
+    file_path = os.path.join(os.path.dirname(__file__), 'static/Projekt.pdf')
+    response = FileResponse(open(file_path, 'rb'))
+
+    # Set the Content-Disposition header to force download
+    response['Content-Disposition'] = 'attachment; filename="Projekt.pdf"'
+
+    return response
+
+@login_required
+def reportPy(request):
+    return None
