@@ -53,7 +53,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'AppFixB1.apps.Appfixb1Config',
     'users',
+    'bootstrap4',
     'AppFixB1.signals'
+
 ]
 
 MIDDLEWARE = [

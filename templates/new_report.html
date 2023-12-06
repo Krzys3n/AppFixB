@@ -7,11 +7,19 @@
 <body>
 
 {% extends "base.html" %}
+{% load bootstrap4 %}
+{% block page_header %}
+
+    <h2>Zgłoszenie:</h2>
+
+
+{% endblock page_header %}
 {% block content %}
-        <p>Report:</p>
+
         <form action="{% url 'new_report' app_id=app_id %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% bootstrap_form form %}
+{#           {{ form.as_p }}#}
             <button name="submit">Send Report</button>
         </form>
 

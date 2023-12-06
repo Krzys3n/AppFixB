@@ -19,13 +19,22 @@
 
 {% extends 'base.html' %}
 
+{% block page_header %}
+
+    <h2>Tutaj możesz pobrać najnowszą wersję aplikacji:</h2>
+
+
+{% endblock page_header %}
+
+
+
 {% block content %}
 <!-- your_app/templates/your_app/pdf_template.html -->
 
 
 <body>
 
-    <h2>Tutaj możesz pobrać najnowszą wersję aplikacji:</h2>
+
     <p>Pynalise:<a href="{% url 'download_file' %}"> Pobierz</a></p>
     <p>Dokumentacja:<a href="{% url 'download_file' %}"> Pobierz</a></p>
 </body>

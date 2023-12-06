@@ -7,9 +7,23 @@
 <body>
 
 {% extends "base.html" %}
-{% block content %}
-<p>Strona poświęcona przedstawieniu oraz testowaniu preojektu inżynierskiemu Pynalise, projekt obejmuje aplikację desktopową Pynalise którą można pobrać wchodząc w odpowiednią podstronę. Można przeczytać dokumentację dotyczącą projektu. Jeśli znajdziesz błąd zgłoś go logując się na stronę i zamieszczając wpis dotyczący problemu.</p>
-{% endblock content %}
+{% block page_header %}
+    <div class='jumbotron'>
+    <h1 class="display-3" align="center">Pynalise</h1>
+    <p class="lead">Strona poświęcona przedstawieniu oraz testowaniu projektu inżynierskiemu Pynalise, projekt obejmuje aplikację desktopową Pynalise którą można pobrać wchodząc w odpowiednią podstronę. Można przeczytać dokumentację dotyczącą projektu. Jeśli znajdziesz błąd zgłoś go logując się na stronę i zamieszczając wpis dotyczący problemu.</p>
 
+</div>
+{% endblock page_header %}
+{% block content %}
+     <div style="text-align: center;">
+    <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">Zarejestruj konto &raquo;</a>
+
+    <a class="btn btn-lg btn-primary" href="{% url 'users:login' %}" role="button">Zaloguj się &raquo;</a>
+
+    <a class="btn btn-lg btn-primary" href="{% url 'download' %}" role="button">Pobierz Pynalise &raquo;</a>
+
+    <a class="btn btn-lg btn-primary" href="{% url 'doc' %}" role="button">Zobacz dokumnetację &raquo;</a>
+</div>
+{% endblock content %}
 </body>
 </html>
