@@ -307,7 +307,7 @@ def download(request):
 
 
 def download_file(request):
-    file_path = os.path.join(os.path.dirname(__file__), 'static/Projekt.pdf')
+    file_path = os.path.join(os.path.dirname(__file__), '../static/Projekt.pdf')
     response = FileResponse(open(file_path, 'rb'))
 
     # Set the Content-Disposition header to force download
