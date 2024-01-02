@@ -68,6 +68,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    'rangefilter.middleware.RangesMiddleware',
 ]
 
 ROOT_URLCONF = 'AppFixBeta1.urls'
