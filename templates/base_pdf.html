@@ -6,9 +6,21 @@
     <title>AppFix</title>
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
+     <style>
+        .wrapped-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+
+        }
+         body {
+        margin: 0;
+    }
+    div {margin: 0}
+    nav {margin:0}
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-0 border">
 
     <a class="navbar-brand" href="{% url 'index' %}">Home</a>
 
@@ -41,6 +53,7 @@
      <a class="nav-link"  href="{% url 'users:login' %}">Logowanie</a></li>
     {% endif %}
     </ul>
+
     </div>
 
 {#    <a href="{% url 'apps' %}">Apps</a> -#}
@@ -60,7 +73,7 @@
 {#    {% endif %}#}
 
 </nav>
-
+{% block content %}xxx{% endblock content %}
 </body>
-    {% block content %}{% endblock content %}
+
 </html>
