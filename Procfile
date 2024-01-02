@@ -1,1 +1,1 @@
-web: gunicorn AppFixB.wsgi
+web: gunicorn AppFixBeta1.wsgi
