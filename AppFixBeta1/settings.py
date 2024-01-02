@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'users',
     'bootstrap4',
     'AppFixB1.signals',
-
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -66,9 +66,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+
 ]
+
 
 ROOT_URLCONF = 'AppFixBeta1.urls'
 
@@ -137,7 +139,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -147,11 +149,15 @@ AUTH_USER_MODEL = "AppFixB1.User"
 LOGIN_URL = 'users:login'
 #
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 X_ACCEL_REDIRECT_SUPPORT = False
+CORS_ALLOWED_ORIGINS = [
+    "https://web-production-bf5f.up.railway.app",
+    # Add other trusted origins if needed
+]
