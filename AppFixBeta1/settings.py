@@ -154,3 +154,4 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
+X_ACCEL_REDIRECT_SUPPORT = False
