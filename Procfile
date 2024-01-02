@@ -1,1 +1,1 @@
-web: gunicorn AppFixBeta1.wsgi
+web: gunicorn AppFixBeta1.wsgi --log-file -
